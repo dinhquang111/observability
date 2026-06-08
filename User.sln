@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", "{29433679-64D8-4440-AC26-DA2610F8CD01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Authorization\Authorization.csproj", "{598206EA-FC15-42DE-BABE-3687680FEC52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC30AD18-E24F-4ADF-824A-43A5D722E48B}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29433679-64D8-4440-AC26-DA2610F8CD01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29433679-64D8-4440-AC26-DA2610F8CD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29433679-64D8-4440-AC26-DA2610F8CD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29433679-64D8-4440-AC26-DA2610F8CD01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{598206EA-FC15-42DE-BABE-3687680FEC52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{598206EA-FC15-42DE-BABE-3687680FEC52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{598206EA-FC15-42DE-BABE-3687680FEC52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{598206EA-FC15-42DE-BABE-3687680FEC52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

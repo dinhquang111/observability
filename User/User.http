@@ -1,0 +1,6 @@
+@User_HostAddress = http://localhost:8080
+
+POST {{User_HostAddress}}/login
+Accept: application/json
+
+###

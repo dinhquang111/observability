@@ -1,0 +1,118 @@
+otelcol.receiver.otlp "default" {
+  grpc {
+    endpoint = "0.0.0.0:4317"
+  }
+  output {
+    traces  = [otelcol.processor.batch.default.input]
+    metrics = [otelcol.processor.batch.metrics.input]
+  }
+}
+
+otelcol.processor.batch "default" {
+  send_batch_size     = 8192
+  send_batch_max_size = 8192
+  timeout             = "5s"
+  output {
+    traces = [otelcol.exporter.otlp.tempo.input]
+  }
+}
+
+otelcol.processor.batch "metrics" {
+  send_batch_size     = 8192
+  send_batch_max_size = 8192
+  timeout             = "5s"
+
+  output {
+    metrics = [otelcol.exporter.prometheus.mimir.input]
+  }
+}
+
+otelcol.exporter.otlp "tempo" {
+  client {
+    endpoint = "tempo:4317"
+    tls {
+      insecure = true
+    }
+  }
+}
+
+otelcol.exporter.prometheus "mimir" {
+  forward_to = [prometheus.remote_write.mimir.receiver]
+  resource_to_telemetry_conversion = true
+}
+
+prometheus.remote_write "mimir" {
+  endpoint {
+    url = "http://mimir:9009/api/v1/push"
+  }
+}
+
+prometheus.scrape "cadvisor" {
+  targets = [{
+    __address__ = "cadvisor:8080",
+    job         = "cadvisor",
+  }]
+  scrape_interval = "30s"
+  scrape_timeout  = "10s"
+  forward_to = [prometheus.remote_write.mimir.receiver]
+}
+
+discovery.docker "containers" {
+  host = "unix:///var/run/docker.sock"
+}
+
+loki.source.docker "containers" {
+  host    = "unix:///var/run/docker.sock"
+  targets = discovery.docker.containers.targets
+  forward_to = [loki.process.parse_json.receiver]  // ← send to processor first
+
+  relabel_rules = loki.relabel.containers.rules
+}
+
+loki.process "parse_json" {
+  // Step 1: parse top level, extract fields as raw string
+  stage.json {
+    expressions = {
+      fields = "fields",
+    }
+  }
+
+  // Step 2: parse the fields object
+  stage.json {
+    source = "fields"
+    expressions = {
+      service  = "service",
+      trace_id = "TraceId",
+      span_id  = "SpanId",
+    }
+  }
+
+  // Step 3: promote to Loki labels
+  stage.labels {
+    values = {
+      service  = "",
+      trace_id = "",
+    }
+  }
+
+  forward_to = [loki.write.default.receiver]
+}
+
+loki.relabel "containers" {
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex         = "/(.*)"
+    target_label  = "container"
+  }
+  rule {
+    source_labels = ["__meta_docker_container_log_stream"]
+    target_label  = "stream"
+  }
+  forward_to = []
+}
+
+loki.write "default" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "version": 2,
+  "dgSpecHash": "wTPv1M6C3FE=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\HV\\RiderProjects\\User\\User\\User.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\HV\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.0\\microsoft.extensions.dependencymodel.10.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\opentelemetry\\1.11.0\\opentelemetry.1.11.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\opentelemetry.api\\1.11.1\\opentelemetry.api.1.11.1.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\opentelemetry.api.providerbuilderextensions\\1.11.1\\opentelemetry.api.providerbuilderextensions.1.11.1.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\opentelemetry.exporter.opentelemetryprotocol\\1.11.0\\opentelemetry.exporter.opentelemetryprotocol.1.11.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\opentelemetry.extensions.hosting\\1.11.0\\opentelemetry.extensions.hosting.1.11.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\opentelemetry.instrumentation.aspnetcore\\1.11.0\\opentelemetry.instrumentation.aspnetcore.1.11.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\opentelemetry.instrumentation.http\\1.11.0\\opentelemetry.instrumentation.http.1.11.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog\\4.3.0\\serilog.4.3.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.aspnetcore\\10.0.0\\serilog.aspnetcore.10.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.enrichers.span\\3.1.0\\serilog.enrichers.span.3.1.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.extensions.hosting\\10.0.0\\serilog.extensions.hosting.10.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.extensions.logging\\10.0.0\\serilog.extensions.logging.10.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.formatting.compact\\3.0.0\\serilog.formatting.compact.3.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.formatting.elasticsearch\\10.0.0\\serilog.formatting.elasticsearch.10.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.settings.configuration\\10.0.0\\serilog.settings.configuration.10.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.sinks.console\\6.1.1\\serilog.sinks.console.6.1.1.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.sinks.debug\\3.0.0\\serilog.sinks.debug.3.0.0.nupkg.sha512",
+    "C:\\Users\\HV\\.nuget\\packages\\serilog.sinks.file\\7.0.0\\serilog.sinks.file.7.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'OpenTelemetry.Api' 1.11.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-8785-wc3w-h8q6",
+      "projectPath": "C:\\Users\\HV\\RiderProjects\\User\\User\\User.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\HV\\RiderProjects\\User\\User\\User.csproj",
+      "libraryId": "OpenTelemetry.Api",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'OpenTelemetry.Api' 1.11.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g94r-2vxg-569j",
+      "projectPath": "C:\\Users\\HV\\RiderProjects\\User\\User\\User.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\HV\\RiderProjects\\User\\User\\User.csproj",
+      "libraryId": "OpenTelemetry.Api",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'OpenTelemetry.Exporter.OpenTelemetryProtocol' 1.11.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-4625-4j76-fww9",
+      "projectPath": "C:\\Users\\HV\\RiderProjects\\User\\User\\User.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\HV\\RiderProjects\\User\\User\\User.csproj",
+      "libraryId": "OpenTelemetry.Exporter.OpenTelemetryProtocol",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}
