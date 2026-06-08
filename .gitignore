@@ -1,0 +1,64 @@
+/.idea
+# Build outputs
+bin/
+obj/
+.idea/
+# .NET specific
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.rsuser
+*.DotSettings.user
+
+# Rider specific
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+appsettings.Local.json
+**/secrets.json
+
+# Docker
+docker-compose.override.yml
+
+# Test results
+TestResults/
+coverage/
+*.coveragexml
+*.trx
+
+# Publish output
+publish/
+out/
+
+# Entity Framework migrations (optional — remove if you want to track migrations)
+# **/Migrations/
+
+# Node (if any frontend tooling)
+node_modules/
