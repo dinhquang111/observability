@@ -2,7 +2,7 @@
 # Build outputs
 bin/
 obj/
-
+.idea/
 # .NET specific
 *.user
 *.suo
