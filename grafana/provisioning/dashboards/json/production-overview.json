@@ -18,15 +18,13 @@
   "graphTooltip": 1,
   "id": null,
   "panels": [
-
     {
       "collapsed": false,
       "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
       "id": 100,
-      "title": "🔴  Tier 1 — Service Health (RED)",
+      "title": "Service Health (RED)",
       "type": "row"
     },
-
     {
       "datasource": { "type": "prometheus", "uid": "mimir" },
       "fieldConfig": {
@@ -46,66 +44,13 @@
       "options": { "colorMode": "background", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } },
       "targets": [{
         "datasource": { "type": "prometheus", "uid": "mimir" },
-        "expr": "sum(rate(http_server_request_duration_seconds_count{job=~\"$service\"}[$__rate_interval])) * 60",
+        "expr": "sum(rate(http_server_request_duration_seconds_count{job=\"$service\"}[5m]))",
         "legendFormat": "req/min",
         "refId": "A"
       }],
       "title": "Request Rate",
       "type": "stat"
     },
-
-    {
-      "datasource": { "type": "prometheus", "uid": "mimir" },
-      "fieldConfig": {
-        "defaults": {
-          "color": { "mode": "thresholds" },
-          "thresholds": { "mode": "absolute", "steps": [
-            { "color": "green", "value": null },
-            { "color": "orange", "value": 0.01 },
-            { "color": "red", "value": 0.05 }
-          ]},
-          "unit": "percentunit"
-        }
-      },
-      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
-      "id": 2,
-      "options": { "colorMode": "background", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } },
-      "targets": [{
-        "datasource": { "type": "prometheus", "uid": "mimir" },
-        "expr": "sum(rate(http_server_request_duration_seconds_count{job=~\"$service\", http_response_status_code=~\"5..\"}[$__rate_interval]))\n/\nsum(rate(http_server_request_duration_seconds_count{job=~\"$service\"}[$__rate_interval]))",
-        "legendFormat": "5xx rate",
-        "refId": "A"
-      }],
-      "title": "Error Rate (5xx)",
-      "type": "stat"
-    },
-
-    {
-      "datasource": { "type": "prometheus", "uid": "mimir" },
-      "fieldConfig": {
-        "defaults": {
-          "color": { "mode": "thresholds" },
-          "thresholds": { "mode": "absolute", "steps": [
-            { "color": "green", "value": null },
-            { "color": "orange", "value": 0.5 },
-            { "color": "red", "value": 1 }
-          ]},
-          "unit": "s"
-        }
-      },
-      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
-      "id": 3,
-      "options": { "colorMode": "background", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } },
-      "targets": [{
-        "datasource": { "type": "prometheus", "uid": "mimir" },
-        "expr": "histogram_quantile(0.99,\n  sum(rate(http_server_request_duration_seconds_bucket{job=~\"$service\"}[$__rate_interval])) by (le)\n)",
-        "legendFormat": "p99",
-        "refId": "A"
-      }],
-      "title": "p99 Latency",
-      "type": "stat"
-    },
-
     {
       "datasource": { "type": "prometheus", "uid": "mimir" },
       "fieldConfig": {
@@ -131,7 +76,31 @@
       "title": "Error Rate (4xx)",
       "type": "stat"
     },
-
+    {
+      "datasource": { "type": "prometheus", "uid": "mimir" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [
+            { "color": "green", "value": null },
+            { "color": "orange", "value": 0.01 },
+            { "color": "red", "value": 0.05 }
+          ]},
+          "unit": "percentunit"
+        }
+      },
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 1 },
+      "id": 2,
+      "options": { "colorMode": "background", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "targets": [{
+        "datasource": { "type": "prometheus", "uid": "mimir" },
+        "expr": "sum(rate(http_server_request_duration_seconds_count{job=~\"$service\", http_response_status_code=~\"5..\"}[$__rate_interval]))\n/\nsum(rate(http_server_request_duration_seconds_count{job=~\"$service\"}[$__rate_interval]))",
+        "legendFormat": "5xx rate",
+        "refId": "A"
+      }],
+      "title": "Error Rate (5xx)",
+      "type": "stat"
+    },
     {
       "datasource": { "type": "prometheus", "uid": "mimir" },
       "fieldConfig": {
@@ -157,7 +126,6 @@
       "title": "p50 Latency",
       "type": "stat"
     },
-
     {
       "datasource": { "type": "prometheus", "uid": "mimir" },
       "fieldConfig": {
@@ -165,25 +133,24 @@
           "color": { "mode": "thresholds" },
           "thresholds": { "mode": "absolute", "steps": [
             { "color": "green", "value": null },
-            { "color": "orange", "value": 1 },
-            { "color": "red", "value": 5 }
+            { "color": "orange", "value": 0.5 },
+            { "color": "red", "value": 1 }
           ]},
-          "unit": "short"
+          "unit": "s"
         }
       },
-      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
-      "id": 6,
-      "options": { "colorMode": "background", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] } },
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 1 },
+      "id": 3,
+      "options": { "colorMode": "background", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } },
       "targets": [{
         "datasource": { "type": "prometheus", "uid": "mimir" },
-        "expr": "sum(aspnetcore_routing_match_attempts_total{job=~\"$service\", match_status=\"failure\"})",
-        "legendFormat": "unmatched routes",
+        "expr": "histogram_quantile(0.99,\n  sum(rate(http_server_request_duration_seconds_bucket{job=~\"$service\"}[$__rate_interval])) by (le)\n)",
+        "legendFormat": "p99",
         "refId": "A"
       }],
-      "title": "Unmatched Routes (total)",
+      "title": "p99 Latency",
       "type": "stat"
     },
-
     {
       "collapsed": false,
       "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
@@ -731,7 +698,7 @@
       {
         "current": {},
         "datasource": { "type": "prometheus", "uid": "mimir" },
-        "definition": "label_values(container_cpu_usage_seconds_total, name)",
+        "definition": "label_values(container_cpu_usage_seconds_total{name=~\"$service.*\"}, name)",
         "hide": 0,
         "includeAll": true,
         "allValue": ".*",
@@ -739,7 +706,10 @@
         "name": "container",
         "label": "Container",
         "options": [],
-        "query": { "query": "label_values(container_cpu_usage_seconds_total, name)", "refId": "StandardVariableQuery" },
+        "query": {
+          "query": "label_values(container_cpu_usage_seconds_total{name=~\"$service.*\"}, name)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "sort": 1,
         "type": "query"

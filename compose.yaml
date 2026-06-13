@@ -1,6 +1,7 @@
-﻿services:
+﻿name: observability
+
+services:
   authorization:
-    container_name: ${AUTHORIZATION_SERVICE_NAME}
     image: authorization:latest
     hostname: ${AUTHORIZATION_SERVICE_HOSTNAME}
     build:
@@ -30,7 +31,6 @@
       start_period: 8s
       
   user:
-    container_name: ${USER_SERVICE_NAME}
     image: user:latest
     hostname: ${USER_SERVICE_HOSTNAME}
     build:
@@ -55,6 +55,8 @@
       alloy:
         condition: service_started
     restart: unless-stopped
+#    deploy:
+#      replicas: 3
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:${USER_CONTAINER_PORT}/healthz"]
       interval: 30s
@@ -100,7 +102,7 @@
     networks:
       - ${DOCKER_NETWORK}
     restart: unless-stopped
-    
+
   mimir:
      container_name: ${MIMIR_SERVICE_NAME}
      image: grafana/mimir:latest
@@ -124,24 +126,24 @@
   # ============================================
   # Grafana Tempo (Distributed Tracing Backend)
   # ============================================
-  tempo:
-    container_name: ${TEMPO_SERVICE_NAME}
-    image: grafana/tempo:latest
-    hostname: ${TEMPO_SERVICE_HOSTNAME}
-    command: [ "-config.file=/etc/tempo.yaml" ]
-    volumes:
-      - ./grafana-tempo/tempo-config.yaml:/etc/tempo.yaml:ro
-    ports:
-      - "${TEMPO_PORT}:${TEMPO_CONTAINER_PORT}"
-    networks:
-      - ${DOCKER_NETWORK}
-    restart: unless-stopped
-    healthcheck:
-      test: [ "CMD-SHELL", "wget -qO- http://localhost:3200/ready | grep -q 'ready' || exit 1" ]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 8s
+#  tempo:
+#    container_name: ${TEMPO_SERVICE_NAME}
+#    image: grafana/tempo:latest
+#    hostname: ${TEMPO_SERVICE_HOSTNAME}
+#    command: [ "-config.file=/etc/tempo.yaml" ]
+#    volumes:
+#      - ./tempo/tempo-config.yaml:/etc/tempo.yaml:ro
+#    ports:
+#      - "${TEMPO_PORT}:${TEMPO_CONTAINER_PORT}"
+#    networks:
+#      - ${DOCKER_NETWORK}
+#    restart: unless-stopped
+#    healthcheck:
+#      test: [ "CMD-SHELL", "wget -qO- http://localhost:3200/ready | grep -q 'ready' || exit 1" ]
+#      interval: 30s
+#      timeout: 5s
+#      retries: 3
+#      start_period: 8s
 
   # ============================================
   # Grafana Loki (Log Aggregation)
@@ -185,12 +187,12 @@
     networks:
       - ${DOCKER_NETWORK}
     depends_on:
-       tempo:
-         condition: service_started
-#       loki:
+#       tempo:
 #         condition: service_started
-       mimir:
+       loki:
          condition: service_started
+#       mimir:
+#         condition: service_started
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]

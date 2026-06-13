@@ -20,6 +20,7 @@
       <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.11.0" />
       <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.11.0" />
       <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.11.0" />
+      <PackageReference Include="RabbitMQ.Client" Version="7.2.1" />
       <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
       <PackageReference Include="Serilog.Enrichers.Span" Version="3.1.0" />
       <PackageReference Include="Serilog.Formatting.Elasticsearch" Version="10.0.0" />

@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
-    .Enrich.WithProperty("service", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name)
+    .Enrich.WithProperty("Service", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name)
     .Enrich.WithSpan()
     .WriteTo.Console(new ElasticsearchJsonFormatter())
     .CreateLogger();
@@ -32,7 +32,7 @@ Action<ResourceBuilder> appResourceBuilder =
 
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(appResourceBuilder)
-    .WithTracing(tracing =>
+    .WithTracing(tracing => 
     {
         tracing
             .AddAspNetCoreInstrumentation()
@@ -65,7 +65,7 @@ app.MapHealthChecks("/healthz");
 app.MapPost("/login", async (IHttpClientFactory httpClientFactory, ILogger<Program> logger) =>
     {
         // Simulate 500ms work
-        await Task.Delay(500);
+        // await Task.Delay(500); 
         // Call Authorization project's /token endpoint
         
         logger.LogInformation("User quang is logging in cls");
@@ -75,7 +75,7 @@ app.MapPost("/login", async (IHttpClientFactory httpClientFactory, ILogger<Progr
         if (!response.IsSuccessStatusCode) 
             return Results.BadRequest("Failed to get token from authorization service");
         
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync();   
         return Results.Ok(content);
 
     })

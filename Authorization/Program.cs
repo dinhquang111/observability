@@ -67,13 +67,13 @@ app.MapPost("/token", async () =>
         // Create first child span (1 second work)
         using (var activity1 = activitySource.StartActivity("Query user permissions"))
         {
-            await Task.Delay(1000);
+            // await Task.Delay(1000);
         }
         
         // Create second child span (2 second work)
         using (var activity2 = activitySource.StartActivity("Sign token"))
         {
-            await Task.Delay(2000);
+            // await Task.Delay(2000);
         }
         
         return Results.Ok(new { Token = "fake-jwt-token-" + Guid.NewGuid() });

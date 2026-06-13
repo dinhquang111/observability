@@ -1,3 +1,7 @@
+livedebugging {
+  enabled = true
+}
+
 otelcol.receiver.otlp "default" {
   grpc {
     endpoint = "0.0.0.0:4317"
@@ -52,7 +56,7 @@ prometheus.scrape "cadvisor" {
     __address__ = "cadvisor:8080",
     job         = "cadvisor",
   }]
-  scrape_interval = "30s"
+  scrape_interval = "15s"
   scrape_timeout  = "10s"
   forward_to = [prometheus.remote_write.mimir.receiver]
 }
@@ -64,34 +68,34 @@ discovery.docker "containers" {
 loki.source.docker "containers" {
   host    = "unix:///var/run/docker.sock"
   targets = discovery.docker.containers.targets
-  forward_to = [loki.process.parse_json.receiver]  // ← send to processor first
-
+  forward_to = [loki.process.standardize.receiver]
   relabel_rules = loki.relabel.containers.rules
 }
 
-loki.process "parse_json" {
-  // Step 1: parse top level, extract fields as raw string
-  stage.json {
-    expressions = {
-      fields = "fields",
+loki.process "standardize" {
+    stage.json {
+      expressions = {
+        service  = "fields.Service",
+        source_context = "fields.SourceContext",
+        level           = "level",
+      }
     }
-  }
-
-  // Step 2: parse the fields object
-  stage.json {
-    source = "fields"
-    expressions = {
-      service  = "service",
-      trace_id = "TraceId",
-      span_id  = "SpanId",
+    stage.drop {
+      source = "level"
+      value  = "Debug"
     }
-  }
-
-  // Step 3: promote to Loki labels
+    stage.drop {
+      source = "source_context"
+      value  = "Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware"
+    }
+    stage.drop {
+      source = "source_context"
+      value = "Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware"
+    }
+ 
   stage.labels {
     values = {
-      service  = "",
-      trace_id = "",
+      service  = "service",
     }
   }
 

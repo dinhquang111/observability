@@ -3,6 +3,12 @@ multitenancy_enabled: false
 server:
   http_listen_port: 9009
   log_level: info
+  
+common:
+  storage:
+    backend: filesystem
+    filesystem:
+      dir: /mimir/blocks
 
 frontend:
   query_stats_enabled: true
@@ -24,11 +30,7 @@ distributor:
 memberlist:
   join_members: []
 
-common:
-  storage:
-    backend: filesystem
-    filesystem:
-      dir: /mimir/blocks
+
 
 blocks_storage:
   tsdb:
